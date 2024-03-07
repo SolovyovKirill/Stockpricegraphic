@@ -3,6 +3,7 @@ package com.ksalauyou.stockpricegraphic.presentation
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.TransformableState
+import androidx.compose.foundation.gestures.rememberTransformableState
 import androidx.compose.foundation.gestures.transformable
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -32,7 +33,7 @@ fun Terminal(bars: List<Bar>) {
 
     var terminalState by rememberTerminalState(bars = bars)
 
-    val transformableState = TransformableState { zoomChange, panChange, _ ->
+    val transformableState = rememberTransformableState { zoomChange, panChange, _ ->
         val visibleBarsCount = (terminalState.visibleBarsCount / zoomChange).roundToInt()
             .coerceIn(MIN_VISIBLE_BARS_COUNT, bars.size)
         val scrolledBy = (terminalState.scrolledBy + panChange.x)
