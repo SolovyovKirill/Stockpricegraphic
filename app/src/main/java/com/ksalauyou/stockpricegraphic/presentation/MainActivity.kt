@@ -25,6 +25,7 @@ class MainActivity : ComponentActivity() {
                 when (val currentState = screenState.value) {
                     is StockScreenState.Initial -> {}
                     is StockScreenState.Content -> {
+                        Terminal(bars = currentState.bars)
                         Log.d("MainActivity", "$currentState")
                     }
                 }
