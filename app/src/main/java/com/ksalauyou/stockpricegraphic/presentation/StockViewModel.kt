@@ -16,18 +16,23 @@ class StockViewModel: ViewModel() {
     private val _state = MutableStateFlow<StockScreenState>(StockScreenState.Initial)
     val state = _state.asStateFlow()
 
+    private var lastState : StockScreenState = StockScreenState.Initial
+
     private val exceptionHandler = CoroutineExceptionHandler { _, throwable ->
         Log.e("StockViewModel", "Exception: $throwable")
+        _state.value = lastState
     }
 
     init {
         loadBarList()
     }
 
-    private fun loadBarList() {
+    fun loadBarList(timeFrame: TimeFrame = TimeFrame.HOUR_1) {
+        lastState = _state.value
+        _state.value = StockScreenState.Loading
         viewModelScope.launch(exceptionHandler) {
-            val barList = apiFactory.loadBars().barList
-            _state.value = StockScreenState.Content(barList)
+            val barList = apiFactory.loadBars(timeFrame.value).barList
+            _state.value = StockScreenState.Content(barList, timeFrame)
         }
     }
 }

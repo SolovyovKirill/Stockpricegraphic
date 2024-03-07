@@ -20,14 +20,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             StockPriceGraphicTheme {
-                val viewModel : StockViewModel = viewModel()
-                val screenState = viewModel.state.collectAsState()
-                when (val currentState = screenState.value) {
-                    is StockScreenState.Initial -> {}
-                    is StockScreenState.Content -> {
-                        Terminal(bars = currentState.bars)
-                    }
-                }
+                Terminal()
             }
         }
     }
