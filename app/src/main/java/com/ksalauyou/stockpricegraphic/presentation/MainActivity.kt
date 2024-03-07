@@ -26,7 +26,6 @@ class MainActivity : ComponentActivity() {
                     is StockScreenState.Initial -> {}
                     is StockScreenState.Content -> {
                         Terminal(bars = currentState.bars)
-                        Log.d("MainActivity", "$currentState")
                     }
                 }
             }
